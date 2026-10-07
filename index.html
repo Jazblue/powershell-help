@@ -29,6 +29,8 @@
         .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; text-align: center; font-size: 0.9em; color: #7f8c8d; }
         .highlight { background: #fff3cd; padding: 2px 4px; border-radius: 3px; }
         .highlight-box { background: #e8f4f8; border-left: 4px solid #3498db; padding: 15px; margin: 20px 0; }
+        .visitor-counter { text-align: right; margin-top: 10px; font-size: 0.85em; color: #7f8c8d; }
+        .visitor-counter span { font-weight: bold; color: #3498db; }
     </style>
 </head>
 <body>
@@ -39,6 +41,10 @@
     </div>
 
     <div id="content">Loading...</div>
+
+    <div class="visitor-counter">
+        Visits: <span id="visit-count">Loading...</span>
+    </div>
 
     <div class="footer">
         <p>PowerShell Help Guide &mdash; Essential commands and scripts for Windows administration.</p>
@@ -64,5 +70,22 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/highlight.js/lib/common.js"></script>
     <script>hljs.highlightAll();</script>
+    
+    <!-- Visitor Counter -->
+    <script>
+        // Simple visitor counter using a free API
+        async function updateVisitorCount() {
+            try {
+                // Use a simple free counter service
+                const response = await fetch('https://api.countapi.xyz/hit/jazblue-powershell/visits');
+                const data = await response.json();
+                document.getElementById('visit-count').textContent = data.value.toLocaleString();
+            } catch (error) {
+                document.getElementById('visit-count').textContent = 'N/A';
+                console.log('Counter unavailable:', error);
+            }
+        }
+        updateVisitorCount();
+    </script>
 </body>
 </html>
