@@ -73,24 +73,15 @@
     
     <!-- Visitor Counter -->
     <script>
-        async function updateVisitorCount() {
-            try {
-                // Use visitor-badge.glitch.me which works well with GitHub Pages
-                const response = await fetch('https://visitor-badge.glitch.me/badge?page_id=jazblue-powershell');
-                const data = await response.json();
-                document.getElementById('visit-count').textContent = data.count.toLocaleString();
-            } catch (error) {
-                // Fallback to a simple counter
-                try {
-                    const response = await fetch('https://api.countapi.xyz/get/jazblue-powershell/visits');
-                    const data = await response.json();
-                    document.getElementById('visit-count').textContent = data.value.toLocaleString();
-                } catch (e) {
-                    document.getElementById('visit-count').textContent = 'N/A';
-                }
-            }
+        try {
+            const counterKey = 'jazblue-powershell';
+            let count = parseInt(localStorage.getItem('powershell-views') || '0');
+            count++;
+            localStorage.setItem('powershell-views', count.toString());
+            document.getElementById('visit-count').textContent = count.toLocaleString() + ' (this browser)';
+        } catch (error) {
+            document.getElementById('visit-count').textContent = 'N/A';
         }
-        updateVisitorCount();
     </script>
 </body>
 </html>
