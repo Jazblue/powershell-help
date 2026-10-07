@@ -73,16 +73,21 @@
     
     <!-- Visitor Counter -->
     <script>
-        // Simple visitor counter using a free API
         async function updateVisitorCount() {
             try {
-                // Use a simple free counter service
-                const response = await fetch('https://api.countapi.xyz/hit/jazblue-powershell/visits');
+                // Use visitor-badge.glitch.me which works well with GitHub Pages
+                const response = await fetch('https://visitor-badge.glitch.me/badge?page_id=jazblue-powershell');
                 const data = await response.json();
-                document.getElementById('visit-count').textContent = data.value.toLocaleString();
+                document.getElementById('visit-count').textContent = data.count.toLocaleString();
             } catch (error) {
-                document.getElementById('visit-count').textContent = 'N/A';
-                console.log('Counter unavailable:', error);
+                // Fallback to a simple counter
+                try {
+                    const response = await fetch('https://api.countapi.xyz/get/jazblue-powershell/visits');
+                    const data = await response.json();
+                    document.getElementById('visit-count').textContent = data.value.toLocaleString();
+                } catch (e) {
+                    document.getElementById('visit-count').textContent = 'N/A';
+                }
             }
         }
         updateVisitorCount();
